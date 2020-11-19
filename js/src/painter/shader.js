@@ -29,7 +29,10 @@ class Shader {
             for(let j = 0; j < player.sightRange; j += SHADER.CHECK_STEP) {
                 currX += stepX;
                 currY += stepY;
-                if(level.safeGetField(Math.round(currX), Math.round(currY))?.blocksSight) {
+                const rX = Math.round(currX);
+                const rY = Math.round(currY);
+                level.safePutExplored(rX, rY, true);
+                if(level.safeGetField(rX, rY)?.blocksSight) {
                     break;
                 }
             }

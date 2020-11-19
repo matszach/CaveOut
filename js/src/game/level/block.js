@@ -8,7 +8,7 @@ class Block {
         this.structure = new Resource(Gmt.randInt(args.minStructure, args.maxStructure));
         this.color = Gmt.choice(args.colors);
         this.position = null;
-        this.destroyed = false;
+        this.destroyed = false
     }
 
     place(x, y) {
