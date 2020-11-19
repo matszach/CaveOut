@@ -93,7 +93,7 @@ class Entity {
             if(this.movement.y > - MOVEMENT.MIN_POST_BOUNCE) this.movement.y = 0;
         }
         if(up > down) {
-            this.movement.y = + this.movement.y * this.bounceBackRactio;
+            this.movement.y = - this.movement.y * this.bounceBackRactio;
             if(this.movement.y < MOVEMENT.MIN_POST_BOUNCE) this.movement.y = 0;
         }
         if(right > left) {
@@ -101,7 +101,7 @@ class Entity {
             if(this.movement.x > - MOVEMENT.MIN_POST_BOUNCE) this.movement.x = 0;
         }
         if(left > right) {
-            this.movement.x = + this.movement.x * this.bounceBackRactio;
+            this.movement.x = - this.movement.x * this.bounceBackRactio;
             if(this.movement.x < MOVEMENT.MIN_POST_BOUNCE) this.movement.x = 0;
         }
     }

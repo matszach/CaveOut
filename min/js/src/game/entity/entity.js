@@ -11,9 +11,9 @@ for(let y=minY;y<maxY+1;y++){if(fields.get(minX,y)?.blocksMovement)clipLeft++;}}
 this._saveSurfaceTouch(clipUp,clipDown,clipLeft,clipRight);}
 _saveSurfaceTouch(up,down,left,right){this.touchingSurface={up:up,down:down,left:left,right:right};}
 _bounceAfterClip(){const{up,down,left,right}=this.touchingSurface;if(down>up){this.movement.y=-this.movement.y*this.bounceBackRactio;if(this.movement.y>-MOVEMENT.MIN_POST_BOUNCE)this.movement.y=0;}
-if(up>down){this.movement.y=+this.movement.y*this.bounceBackRactio;if(this.movement.y<MOVEMENT.MIN_POST_BOUNCE)this.movement.y=0;}
+if(up>down){this.movement.y=-this.movement.y*this.bounceBackRactio;if(this.movement.y<MOVEMENT.MIN_POST_BOUNCE)this.movement.y=0;}
 if(right>left){this.movement.x=-this.movement.x*this.bounceBackRactio;if(this.movement.x>-MOVEMENT.MIN_POST_BOUNCE)this.movement.x=0;}
-if(left>right){this.movement.x=+this.movement.x*this.bounceBackRactio;if(this.movement.x<MOVEMENT.MIN_POST_BOUNCE)this.movement.x=0;}}
+if(left>right){this.movement.x=-this.movement.x*this.bounceBackRactio;if(this.movement.x<MOVEMENT.MIN_POST_BOUNCE)this.movement.x=0;}}
 _forceBackAfterClip(){const{up,down,left,right}=this.touchingSurface;const{minX,minY,maxX,maxY}=this.overlapRange;if(up>down){this.nextPosition.y=minY+this.collisionSize+0.5;}else if(down>up){this.nextPosition.y=maxY-this.collisionSize-0.5;}
 if(left>right){this.nextPosition.x=minX+this.collisionSize+0.5;}else if(right>left){this.nextPosition.x=maxX-this.collisionSize-0.5;}}
 limitMovement(){this.movement.x=Gmt.clamp(this.movement.x,-this.maxSpeed,+this.maxSpeed);this.movement.y=Gmt.clamp(this.movement.y,-this.maxSpeed,MOVEMENT.DOWN_MAX);}
