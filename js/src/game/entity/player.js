@@ -1,8 +1,11 @@
 "use strict";
+const PLAYER_TEMPLATE = {};
+
+
 class Player extends SubjectEntity {
 
-    constructor(args) {
-        super(args);
+    constructor() {
+        super(PLAYER_TEMPLATE);
     }
 
     act(loop) {

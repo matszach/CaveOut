@@ -24,7 +24,7 @@ const GameManager = {
 
     createPlayerIfAbsent() {
         if(!this._state.player) {
-            this._state.player = new Player({}); // TODO real entity
+            this._state.player = new Player(); // TODO real entity
         }
     },
 
