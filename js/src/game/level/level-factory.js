@@ -8,7 +8,7 @@ class LevelFactory {
 
     _calculateLevelSize(difficulty, levelNumber) {
         return {
-            sizeX: Gmt.randInt(120, 140) + difficulty * 10 + levelNumber * 5,
+            sizeX: Gmt.randInt(220, 290) + difficulty * 10 + levelNumber * 5,
             sizeY: Gmt.randInt(420, 520) + difficulty * 50 + levelNumber * 25 * difficulty
         };
     } 

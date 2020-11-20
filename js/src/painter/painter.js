@@ -15,6 +15,7 @@ const Painter = {
     init(canvasWrapper) {
         this._canvasWrapper = canvasWrapper;
         this.shader = new Shader(canvasWrapper);
+        this.minimapper = new Minimapper(canvasWrapper);
     },
 
     defaultOffset() {
@@ -75,6 +76,8 @@ const Painter = {
         if(this.flags.collisions) {
             GameManager._state.entities(e => e._drawCollision(cw, ox, oy, frameNum));  // todo a check if entity in range
         }
+
+        this.minimapper.draw(frameNum);
 
         if(this.flags.stats) {
             this.displayStats(loop, ox, oy);
