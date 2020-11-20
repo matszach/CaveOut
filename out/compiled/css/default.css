@@ -1,0 +1,24 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color:#000;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #555;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #222;
+}
+
+#ui-home, #canvas-home {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
