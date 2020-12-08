@@ -16,6 +16,7 @@ class Entity {
         this.bounceBackRactio = args.bounceBackRactio || 0.6;
         this.floorFriction = args.floorFriction || 0.003;
         this.airFriction = args.airFriction || 0.001;
+        this.stationary = args.stationary || false;
         // temp fields 
         this.nextPosition = this.position;
         this.overlapRange = {};
@@ -157,6 +158,9 @@ class Entity {
         this.position = this.nextPosition;
     }
     move() {
+        if (this.stationary) {
+            return;
+        }
         this._calcNextPosition();
         this._calcOverlappedFieldRange();
         this.gravityMovement();
@@ -169,5 +173,41 @@ class Entity {
     }
     act(loop) {
         // abstract
+    }
+    collides(entity) {
+        const x = this.position.x - entity.position.x;
+        const y = this.position.y - entity.position.y;
+        const distance = Math.sqrt(x * x + y * y);
+        return distance < this.collisionSize + entity.collisionSize;
+    }
+    collidePlayer(callback) {
+        const player = GameManager._state.player;
+        if (this.collides(player)) {
+            callback(player);
+        }
+    }
+    collideNpcs(callback) {
+        const e = this;
+        GameManager._state.level.npcs.forEach(n => {
+            if (e.collides(n)) {
+                callback(n);
+            }
+        });
+    }
+    collideProjectiles(callback) {
+        const e = this;
+        GameManager._state.level.projectiles.forEach(p => {
+            if (e.collides(p)) {
+                callback(p);
+            }
+        });
+    }
+    collideParticles(callback) {
+        const e = this;
+        GameManager._state.level.particles.forEach(p => {
+            if (e.collides(p)) {
+                callback(p);
+            }
+        });
     }
 }

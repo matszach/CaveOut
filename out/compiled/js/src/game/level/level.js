@@ -6,7 +6,7 @@ class Level {
         this.fields = new Gmt.Table2D(sizeX, sizeY, null);
         this.explored = new Gmt.Table2D(sizeX, sizeY, false);
         this.background = new Background();
-        this.enemies = [];
+        this.npcs = [];
         this.projectiles = [];
         this.particles = [];
     }

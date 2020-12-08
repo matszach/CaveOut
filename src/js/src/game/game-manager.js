@@ -24,7 +24,7 @@ const GameManager = {
 
     createPlayerIfAbsent() {
         if(!this._state.player) {
-            this._state.player = new Player(); // TODO real entity
+            this._state.player = new Player();
         }
     },
 
@@ -33,7 +33,11 @@ const GameManager = {
         this.levelFactory.create(GameManager._state.player, difficulty, levelNumber, level => {
             GameManager._state.level = level;
         });
-        this._state.player.position.place(40, 40); // FIXME put in level factory
+    },
+
+    nextlevel() {
+        const {difficulty, levelNumber} = this._state.level;
+        this.loadLevel(difficulty, levelNumber);
     }
     
 };

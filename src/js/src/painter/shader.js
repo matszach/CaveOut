@@ -20,7 +20,7 @@ class Shader {
     }
 
     _drawShade(player, level, ox, oy) {
-        const outVertices = [];
+        let outVertices = [];
         const {x: pX, y: pY} = player.position;
         for(let i = 0; i < SHADER.NOF_VISIBILITY_VERTICES; i++) {
             const dir = (2 * Math.PI) * (i / SHADER.NOF_VISIBILITY_VERTICES);
@@ -41,13 +41,32 @@ class Shader {
         this._drawShadeMask(outVertices);
     }
 
+    _smoothenShadeMask(outVerices) {
+        const smoothened = [];
+        for(let i = 0; i < outVerices.length; i++) {
+            const {x, y} = this._averageAround(outVerices, i);
+            smoothened.push(new Gmt.Vertex(x, y));
+        }
+        return smoothened;
+    }
+
+    _averageAround(outVerices, index) {
+        const prev = outVerices[index > 1 ? index - 1 : outVerices.length - 1];
+        const curr = outVerices[index];
+        const next = outVerices[index < outVerices.length - 2 ? index + 1 : 0];
+        return {
+           x: (prev.x + curr.x + next.x)/3,
+           y: (prev.y + curr.y + next.y)/3
+        };
+    }
+
     _drawShadeMask(outVerices) {
         const bottomMask = new Gmt.Polygon();
         outVerices.slice(0, outVerices.length/2 + 2).forEach(v => bottomMask.push(v));
         bottomMask.add(0, SCREEN.HEIGHT/2 - 0.5);
-        bottomMask.add(0, SCREEN.HEIGHT - 0.5);
+        bottomMask.add(0, SCREEN.HEIGHT);
         bottomMask.add(SCREEN.WIDTH, SCREEN.HEIGHT);
-        bottomMask.add(SCREEN.WIDTH, SCREEN.HEIGHT/2);
+        bottomMask.add(SCREEN.WIDTH, SCREEN.HEIGHT/2 - 0.5);
         this.cw.fillPolygon(bottomMask, SHADER.SHADE_COLOR);
         const topMask = new Gmt.Polygon();
         outVerices.slice(outVerices.length/2, outVerices.length).forEach(v => topMask.push(v));

@@ -29,6 +29,24 @@ class LevelFactory {
         }
     }
 
+    placeEntities(player, nodes, level) {
+        player.position.place(0, 0);
+        const f = this;
+        nodes.forEach(n => {
+            const {x, y, type} = n;
+            switch(type) {
+                case LEVEL_TEMPLATE_NODE_TYPE.PLAYER: player.position.place(x, y); break;
+                case LEVEL_TEMPLATE_NODE_TYPE.END_PORTAL: f.spawnNpc(level, EndPortal, x, y); break;
+            }
+        });
+    }
+
+    spawnNpc(level, className, x, y) {
+        const e = new className();
+        e.position.place(x, y);
+        level.npcs.push(e);
+    }
+
     create(player, difficulty, levelNumber, callback) {
         setTimeout(factory => {
             const {sizeX, sizeY} = factory._calculateLevelSize(difficulty, levelNumber);
@@ -37,6 +55,7 @@ class LevelFactory {
             const level = new Level(difficulty, levelNumber, sizeX, sizeY);
             factory.translate(level, template, nodes);
             factory.generateBackground(level);
+            factory.placeEntities(player, nodes, level);
             callback(level);
         }, 0, this);
     }

@@ -33,7 +33,6 @@ def copy_html(path):
             new_file.write(minified)
 
 # LOGIC
-
 if os.path.exists('out'):
     shutil.rmtree('out')
 os.system('tsc')

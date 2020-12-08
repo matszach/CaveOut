@@ -1,6 +1,8 @@
 "use strict";
-class Enemy extends SubjectEntity {
+class Npc extends SubjectEntity {
+
     constructor(args) {
         super(args);
     }
+
 }

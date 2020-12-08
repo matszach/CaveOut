@@ -1,4 +1,9 @@
 "use strict";
+const LEVEL_TEMPLATE_NODE_TYPE = {
+    PLAYER: 0,
+    END_PORTAL: 1
+};
+
 class LevelTemplateBuilder {
 
     constructor(sizeX, sizeY) {
@@ -79,17 +84,41 @@ class LevelTemplateBuilder {
         this.putRect(this.template.xSize - 2, 0, 2, this.template.ySize, BLOCK_TYPES.BEDROCK);
     }
 
+    randPos(core) {
+        const x = Gmt.randInt(0, core.length);
+        return {
+            x: x,
+            y: core[x]
+        };
+    }
+
+    addRandNode(core, type) {
+        const {x, y} = this.randPos(core);
+        this.addNode(x, y, type);
+    }
+
+    spawnEntities(core, isFirst, isLast) {
+        if(isFirst) {
+            this.addRandNode(core, LEVEL_TEMPLATE_NODE_TYPE.PLAYER);
+        }
+        if(isLast) {
+            this.addRandNode(core, LEVEL_TEMPLATE_NODE_TYPE.END_PORTAL);
+        }
+    }
+
     build() {
         let depth = 0;
         let lastCore;
         while(depth < (this.template.ySize - 50)) {
             depth += Gmt.randInt(20, 30);
-            let core = this.generateCaveLevel(depth);
+            const core = this.generateCaveLevel(depth);
             if(!!lastCore) {
                 this.generateShafts(lastCore, core);
             }
+            this.spawnEntities(core, !lastCore, false);
             lastCore = core;
         }
+        this.spawnEntities(lastCore, false, true);
         this.outline();
         return {
             template: this.template,
